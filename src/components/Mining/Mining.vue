@@ -24,6 +24,10 @@
                         </path>
                 </svg>
             </div>
+            <div id="minerNameBox">
+                <p class="name">Miner <br/> <span class="secondWord">Name</span></p>
+                <input class="input" type="text" @change="minerNameChanged" v-model="minerName" />
+            </div>
             <p class="WEBD">
                 <svg :style="{display: this.loaded==false ? 'inline-block' : 'none'}" version="1.1" id="miningLoader" class="miningLoader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
@@ -96,7 +100,7 @@
                 status: '',
                 loaded:false,
                 stopTimerHandler: null,
-
+                minerName: localStorage.getItem("miner-name") || "Not Set",
                 _prevWorkers: null,
             }
         },
@@ -185,6 +189,9 @@
         ,
         methods: {
         
+            minerNameChanged(event) {
+                localStorage.setItem("miner-name", event.target.value);
+            },
             changeWorkers(value){
 
                 WebDollar.Blockchain.Mining.setWorkers(value);
@@ -515,6 +522,43 @@
         display: inline-block;
     }
 
+    #minerNameBox {
+        vertical-align: top;
+        display: inline-block;
+        margin-top: 1px;
+        margin-left: 10px;
+    }
+
+    #minerNameBox .name {
+        margin-top: 0px;
+        font-size: 10px;
+        display: inline-block;
+        padding: 0 10px;
+        vertical-align: top;
+        padding-top: 5px;
+        margin: 0;
+        color: #fff;
+    }
+
+    #minerNameBox .name .secondWord {
+        height: auto;
+        line-height: 10px;
+        margin: 0;
+        font-weight: bold;
+        color: #fff;
+        margin-right: -4px;
+    }
+
+    #minerNameBox .input {
+        margin-left: 0px;
+        background: #4c4c4c;
+        border: none;
+        color: #fec02c;
+        line-height: 31px;
+        text-align: center;
+        width: 100px;
+    }
+
     @media only screen and (max-width : 831px) {
 
         .hoverBalanceInfo{
@@ -618,6 +662,14 @@
             width: auto!important;
             color: #000;
             margin-left: 10px;
+        }
+
+    }
+
+    @media only screen and (max-width : 999px) {
+
+        #minerNameBox {
+            display: none;
         }
 
     }
